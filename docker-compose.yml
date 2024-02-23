@@ -1,0 +1,35 @@
+services:
+  webui-intel:
+    container_name: sdnext-webui-intel
+    build: ./services/webui-intel/
+    profiles: ["webui-intel"]
+    ports:
+      - "7860:7860"
+    volumes:
+      - "./models:/stable-diffusion-webui/models"
+      - "./extensions:/stable-diffusion-webui/extensions"
+      - "./extensions-builtin:/stable-diffusion-webui/extensions-builtin"
+      - "./outputs:/stable-diffusion-webui/outputs"
+      - "./config:/stable-diffusion-webui/config"
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri/card0:/dev/dri/card0
+    environment:
+      - CLI_ARGS=--medvram
+    restart: unless-stopped
+
+  webui-cpu:
+    container_name: sdnext-webui-cpu
+    build: ./services/webui-cpu/
+    profiles: ["webui-cpu"]
+    ports:
+      - "7860:7860"
+    volumes:
+      - "./models:/stable-diffusion-webui/models"
+      - "./extensions:/stable-diffusion-webui/extensions"
+      - "./extensions-builtin:/stable-diffusion-webui/extensions-builtin"
+      - "./outputs:/stable-diffusion-webui/outputs"
+      - "./config:/stable-diffusion-webui/config"
+    environment:
+      - CLI_ARGS=""
+    restart: unless-stopped
