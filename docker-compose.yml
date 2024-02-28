@@ -8,7 +8,6 @@ services:
     volumes:
       - "./models:/stable-diffusion-webui/models"
       - "./extensions:/stable-diffusion-webui/extensions"
-      - "./extensions-builtin:/stable-diffusion-webui/extensions-builtin"
       - "./outputs:/stable-diffusion-webui/outputs"
       - "./config:/stable-diffusion-webui/config"
     devices:
@@ -27,7 +26,6 @@ services:
     volumes:
       - "./models:/stable-diffusion-webui/models"
       - "./extensions:/stable-diffusion-webui/extensions"
-      - "./extensions-builtin:/stable-diffusion-webui/extensions-builtin"
       - "./outputs:/stable-diffusion-webui/outputs"
       - "./config:/stable-diffusion-webui/config"
     environment:
