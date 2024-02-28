@@ -14,7 +14,7 @@ services:
       - /dev/dri/renderD128:/dev/dri/renderD128
       - /dev/dri/card0:/dev/dri/card0
     environment:
-      - CLI_ARGS=--medvram
+      - CLI_ARGS=--debug --medvram
     restart: unless-stopped
 
   webui-cpu:
@@ -29,5 +29,5 @@ services:
       - "./outputs:/stable-diffusion-webui/outputs"
       - "./config:/stable-diffusion-webui/config"
     environment:
-      - CLI_ARGS=""
+      - CLI_ARGS=--debug
     restart: unless-stopped
