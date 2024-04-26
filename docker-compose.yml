@@ -1,4 +1,19 @@
 services:
+  webui-cpu:
+    container_name: sdnext-webui-cpu
+    build: ./services/webui-cpu/
+    profiles: ["webui-cpu"]
+    ports:
+      - "7860:7860"
+    volumes:
+      - "./models:/stable-diffusion-webui/models"
+      - "./extensions:/stable-diffusion-webui/extensions"
+      - "./outputs:/stable-diffusion-webui/outputs"
+      - "./config:/stable-diffusion-webui/config"
+    environment:
+      - CLI_ARGS=--debug
+    restart: unless-stopped
+
   webui-intel:
     container_name: sdnext-webui-intel
     build: ./services/webui-intel/
@@ -14,13 +29,13 @@ services:
       - /dev/dri/renderD128:/dev/dri/renderD128
       - /dev/dri/card0:/dev/dri/card0
     environment:
-      - CLI_ARGS=--debug --medvram
+      - CLI_ARGS=--debug
     restart: unless-stopped
 
-  webui-cpu:
-    container_name: sdnext-webui-cpu
-    build: ./services/webui-cpu/
-    profiles: ["webui-cpu"]
+  webui-amd:
+    container_name: sdnext-webui-amd
+    build: ./services/webui-amd/
+    profiles: ["webui-amd"]
     ports:
       - "7860:7860"
     volumes:
@@ -28,6 +43,10 @@ services:
       - "./extensions:/stable-diffusion-webui/extensions"
       - "./outputs:/stable-diffusion-webui/outputs"
       - "./config:/stable-diffusion-webui/config"
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri/card0:/dev/dri/card0
+      - /dev/kfd:/dev/kfd
     environment:
       - CLI_ARGS=--debug
     restart: unless-stopped
