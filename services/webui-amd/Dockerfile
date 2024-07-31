@@ -1,9 +1,18 @@
-FROM python:3.10-bookworm
+FROM ubuntu:jammy
 
 RUN \
   apt-get update \
+  && apt-get install -y ca-certificates git wget gpg libgomp1 \
+  && mkdir --parents --mode=0755 /etc/apt/keyrings \
+  && wget https://repo.radeon.com/rocm/rocm.gpg.key \
+  && sh -c "cat rocm.gpg.key | gpg --dearmor > /etc/apt/keyrings/rocm.gpg" \
+  && sh -c "echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/rocm.gpg] https://repo.radeon.com/rocm/apt/6.1.2 jammy main' | tee /etc/apt/sources.list.d/rocm.list" \
+  && sh -c "echo 'Package: *' > /etc/apt/preferences.d/rocm-pin-600" \
+  && sh -c "echo 'Pin: release o=repo.radeon.com' >> /etc/apt/preferences.d/rocm-pin-600" \
+  && sh -c "echo 'Pin-Priority: 600' >> /etc/apt/preferences.d/rocm-pin-600" \
   && apt-get upgrade -y \
-  && apt-get install git python3-pip libgl1-mesa-glx rocminfo rocm-device-libs -y
+  && apt-get update \
+  && apt-get install -y rocm
 
 # Create User Permissions
 ARG DOCKER_USER=default_user
