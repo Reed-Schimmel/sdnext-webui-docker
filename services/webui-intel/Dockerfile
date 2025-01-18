@@ -1,4 +1,4 @@
-FROM intel/oneapi-basekit:2024.2.0-devel-ubuntu22.04
+FROM intel/oneapi-basekit:2025.0.1-0-devel-ubuntu24.04
 
 RUN \
   apt-get update \
